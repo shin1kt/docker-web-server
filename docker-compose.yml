@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    build: ./db
+    volumes:
+      - ./db/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - "4306:3306"
+  web:
+      build: ./web
+      hostname: 'testwebserver'
+      ports:
+        - '8080:80'
+      volumes:
+        - ./html:/var/www/html
+      depends_on:
+        - db
